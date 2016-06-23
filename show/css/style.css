@@ -50,9 +50,9 @@ progress.hidden {
     width: 300px;
     text-align: center;
     margin: auto;
-    font-family: "Ubuntu Mono", sans-serif;
+    font-family: sans-serif;
     font-size: 1.2em;
-    line-height: 20px;
+    line-height: 30px;
 }
 
 #instruction.appear {
