@@ -6,8 +6,14 @@
 </head>
 <link rel="stylesheet" href="style.css">
 <body onload=generateUID();>
-<div id="instruction">
-    <div id = "uid"> Your URL is </div>
+<div id = "instruction" class="bar"> 
+    <img src="./img/fingerprint.jpg">
+    <h2>Now Next</h2>
+    Open the link: <p id="uid"></p>
+    with a browser.
+    <div id= "browsers">
+        (Firefox, chrome, safair etc.)
+    </div>
 </div>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="toServer.js"></script>
