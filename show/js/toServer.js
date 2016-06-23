@@ -145,7 +145,7 @@ function toServer(WebGL, inc, gpu, hash, id, dataurl){ //send messages to server
                 $('#instruction').append('You have finished <strong>' + num + '</strong> browsers<br>Now open the link:<br><a href="' + url + '">' + url + '</a><br>with another browser');
                 $('#instruction').append('<div id= "browsers">(Firefox, chrome, safair or edge)</div>');
             }else{
-                $('#instruction').append('You have finished <strong>' + num + '</strong> browsers<br>Your code is ' + code);
+                $('#instruction').append('You have finished <strong>' + num + '</strong> browsers<br>Your code is ' + code + '<br> <strong>Thank you!</strong>');
                 
             }
             progress(100);
