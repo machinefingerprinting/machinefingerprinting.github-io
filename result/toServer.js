@@ -43,7 +43,7 @@ function generatePage(){
     $("#left").children().remove(); //clear left div
     postData = 'Refresh';
 
-    /* var f = document.createElement("form");
+    /*var f = document.createElement("form");
     f.setAttribute('method',"post");
     f.setAttribute('action',"http://" + ip_address + "/result.py");
 
@@ -137,7 +137,6 @@ function toServer(id){ //send messages to server and receive messages from serve
             }
             clearPage();
             var hashCodes = JSON.parse(data.toString());
-            console.log(hashCodes);
             draw(postData, hashCodes);
         }
     });
