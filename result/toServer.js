@@ -43,7 +43,7 @@ function generatePage(){
     $("#left").children().remove(); //clear left div
     postData = 'Refresh';
 
-    /*var f = document.createElement("form");
+    var f = document.createElement("form");
     f.setAttribute('method',"post");
     f.setAttribute('action',"http://" + ip_address + "/result.py");
 
@@ -54,7 +54,7 @@ function generatePage(){
     f.appendChild(i);
 
     f.submit();
-    return ;*/
+    return ;
 
     $.ajax({
         url:"http://" + ip_address + "/result.py",
