@@ -1,5 +1,4 @@
 var pixels = new Uint8Array(262144);
-var ip_address = "184.73.16.65";
 var ven, ren;
 
 function getData(gl, canvasName, pic_id){
@@ -35,7 +34,7 @@ function toServer(pic_id, pi){ //send messages to server and receive messages fr
     */
 
     $.ajax({
-        url:"http://" + ip_address + "/gradient.py",  
+        url:"http://128.180.123.19/gradient.py",  
         dataType:"html",
         type: 'POST',
         data: JSON.stringify(postData),
@@ -44,7 +43,7 @@ function toServer(pic_id, pi){ //send messages to server and receive messages fr
                 alert("finished");
                 return ;
             }
-            window.location.href = "http://mf.songli.us/gradient/?" + parseInt(pic_id + 1);
+            window.location.href = "http://128.180.123.19/mf/gradient/?" + parseInt(pic_id + 1);
 //            window.location.href = "http://54.85.74.36:9876/?" + parseInt(pic_id + 1);
         }
     }); 
