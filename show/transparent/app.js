@@ -25,10 +25,10 @@ var TransparentTest = function () {
     };
     var RunTransparent = function (vertexShaderText, fragmentShaderText, SusanImage, SusanModel, alp, childNumber, parent) {
         this.begin = function(canvas) {
-                var gl = getGL(canvas);
+                var gl;
                 if(childNumber == 10){
                     gl = getGLAA(canvas); 
-                }
+                }else gl = getGL(canvas);
                 var WebGL = true;
 
                 gl.clearColor(0.0, 0.0, 0.0, 0.0);
