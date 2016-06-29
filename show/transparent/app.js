@@ -27,6 +27,7 @@ var TransparentTest = function () {
         this.begin = function(canvas) {
                 var gl;
                 if(childNumber == 10){
+                    canvas = getCanvas("can_aa");
                     gl = getGLAA(canvas); 
                 }else gl = getGL(canvas);
                 var WebGL = true;

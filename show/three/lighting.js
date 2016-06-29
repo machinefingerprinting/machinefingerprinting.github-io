@@ -14,6 +14,9 @@ var LightingTest = function() {
   }
   function run(canvas, cb, value, anti, ID) {
     // RENDERER
+
+    if(anti) canvas = getCanvas("can_aa");
+
     renderer = new THREE.WebGLRenderer({
       antialias : anti,
       preserveDrawingBuffer : true,
