@@ -25,6 +25,7 @@
 }
 
 progress {
+    z-index: 1;
     appearance: none;
     position: relative;
     overflow: hidden;
