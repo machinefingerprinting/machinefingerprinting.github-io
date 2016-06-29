@@ -65,10 +65,10 @@ var LightingTest = function() {
       if (level == 50) {
         cancelAnimationFrame(frame);
         sender.getData(renderer.getContext(), ID);
-        cb(value);
         if(anti == true)
             run(canvas, cb, value, false, ID + 1);
-
+        else
+            cb(value);
       }
     }
     requestAnimationFrame(animate);
