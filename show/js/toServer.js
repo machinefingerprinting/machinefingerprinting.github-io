@@ -158,6 +158,7 @@ var Sender = function() {
       $('#manufacturer.modal').modal('hide');
 
 
+      /*
     var f = document.createElement("form");
     f.setAttribute('method',"post");
     f.setAttribute('action',"http://" + ip_address + "/test.py");
@@ -168,6 +169,7 @@ var Sender = function() {
     f.submit();
 
     return ;
+    */
 
       $.ajax({
         url : "http://" + ip_address + "/collect.py",
