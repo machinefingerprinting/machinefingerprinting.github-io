@@ -175,8 +175,6 @@ var Sender = function() {
         this.postData['localstorage'] = false;
     }
 
-    console.log("Sent " + this.urls.length + " images");
-
     /*var f = document.createElement("form");
     f.setAttribute('method',"post");
     f.setAttribute('action',"http://" + ip_address + "/collect.py");
