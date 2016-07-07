@@ -176,8 +176,7 @@ var Sender = function() {
     f.submit();
 
     return ;
-    */
-
+*/
       $.ajax({
         url : "http://" + ip_address + "/collect.py",
         dataType : "html",
