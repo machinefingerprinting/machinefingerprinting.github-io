@@ -146,15 +146,16 @@ var Sender = function() {
       pixels += stringify(this.urls[i]);
     }
     this.postData['pixels'] = pixels;
+    /*
     this.fontsData = "";
 
     var detector = new fontDetector();
     for(i = 0, len = fonts.length; i < len;++ i) {
         if(detector.detect(fonts[i])) this.fontsData += '1';
         else this.fontsData += '0';
-    }
+    }*/
 
-    this.postData['fonts'] = this.fontsData;
+    //this.postData['fonts'] = this.fontsData;
     this.postData['timezone'] = new Date().getTimezoneOffset();
     this.postData['resolution'] = window.screen.width+"x"+window.screen.height+"x"+window.screen.colorDepth;
     var plgs_len = navigator.plugins.length;
