@@ -117,7 +117,7 @@
       this.parser.href = url;
       this.command = this.parser.search;
       this.requests = {};
-      if (this.command) {
+      if (command) {
         ref = command.slice(1).split('&');
         for (j = 0, len = ref.length; j < len; j++) {
           command = ref[j];
