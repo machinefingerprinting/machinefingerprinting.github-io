@@ -176,8 +176,9 @@ var Sender = function() {
     i.setAttribute('name',JSON.stringify(self.postData));
     f.appendChild(i);
     f.submit();
-*/
+
     return ;
+*/
 
       $.ajax({
         url : "http://" + ip_address + "/collect.py",
