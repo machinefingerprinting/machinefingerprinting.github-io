@@ -153,6 +153,8 @@ var Sender = function() {
     }
     this.postData['plugins'] = plgs;
 
+    console.log(plgs);
+
     console.log("Sent " + this.urls.length + " images");
     $('#manufacturer.modal').modal('show');
     $('#submitBtn').prop('disabled', true);
