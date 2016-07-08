@@ -196,7 +196,7 @@
       this.testList.push(new LightingTest());
       this.testList.push(new ClippingTest());
       this.testList.push(new BubbleTest());
-      //this.testList.push(new CompressedTextureTest());
+      this.testList.push(new CompressedTextureTest());
       this.testList.push(new ShadowTest());
       vidTest = new VideoTest();
       sender.finalized = true;
