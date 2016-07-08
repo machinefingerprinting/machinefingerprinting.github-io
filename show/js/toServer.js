@@ -261,7 +261,7 @@ var Sender = function() {
                 $('#instruction')
                   .append('You have finished <strong>' + num +
                           '</strong> browsers<br>Your code is ' + code +
-                          '<br> <strong>Thank you!</strong><br> Just input this code back to Amazon echanical turk, we will know you finished three browsers');
+                          '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
             }
             progress(100);
             Cookies.set('machine_fingerprinting_userid', user_id);
