@@ -192,13 +192,13 @@ class Loader
     @testList.push(new SimpleLightTest(@susanVertices, @susanIndices, @susanTexCoords, @susanNormals, @texture))
     @testList.push(new SimpleLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
     @testList.push(new MoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
+    @testList.push(new TwoTexturesMoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture, @texture1))
     @testList.push(new TransparentTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
     @testList.push(new LightingTest())
     @testList.push(new ClippingTest())
     @testList.push(new BubbleTest())
     @testList.push(new CompressedTextureTest())
     @testList.push(new ShadowTest())
-    @testList.push(new TwoTexturesMoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture, @texture1))
     vidTest = new VideoTest()
 
     sender.finalized = true
