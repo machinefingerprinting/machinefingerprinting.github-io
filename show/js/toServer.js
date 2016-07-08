@@ -254,7 +254,7 @@ var Sender = function() {
                           '</strong> browsers<br>Your code is ' + code +
                           '<br> <strong>Thank you!</strong><br> If you do this task with 3 browsers, you will get a bonus!');
                 $('#instruction')
-                    .append('Your link is:<br><a href="' + url + '">' +
+                    .append('<br>Your link is:<br><a href="' + url + '">' +
                             url + '</a> <br>');
                 createCopyButton(url, '#instruction');
             }
