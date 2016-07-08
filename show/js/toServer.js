@@ -220,6 +220,7 @@ var Sender = function() {
         type : 'POST',
         data : JSON.stringify(self.postData),
         success : function(data) {
+            console.log("success");
           if (data === 'user_id error') {
             window.location.href = error_page;
           } else {
@@ -259,6 +260,9 @@ var Sender = function() {
         }
       });
     });
+    if (requests.hasOwnProperty('modal') && requests['modal'] === 'false') {
+      $('#submitBtn').click();
+    }
   }
 
   /* Converts the charachters that aren't UrlSafe to ones that are and
