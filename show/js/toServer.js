@@ -252,7 +252,7 @@ var Sender = function() {
                 $('#instruction')
                   .append('You have finished <strong>' + num +
                           '</strong> browsers<br>Your code is ' + code +
-                          '<br> <strong>Thank you!</strong><div style="font-size:0.8em;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
+                          '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
                 $('#instruction')
                     .append('Your link is:<br><a href="' + url + '">' +
                             url + '</a> <br>');
