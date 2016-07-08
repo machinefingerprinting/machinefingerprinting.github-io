@@ -78,7 +78,7 @@ class Loader
     susanName = './assets/Susan.json'
     simpleName = './assets/simple.json'
     colorName = './assets/color.png'
-    colorName1 = './assets/tiles.png'
+    colorName1 = './assets/color2.png'
 
     loadJSONResource susanName, (err, @susanModel) =>
       if err
@@ -105,7 +105,7 @@ class Loader
 
     loadImage colorName1, (err, @texture1) =>
       if err
-        alert 'error getting tiles.png'
+        alert 'error getting colors.png'
         console.log err
       else
         @assetLoaded()
