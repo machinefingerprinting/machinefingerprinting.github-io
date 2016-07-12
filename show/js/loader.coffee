@@ -1,4 +1,6 @@
-window.createCopyButton = (text, home) ->
+root = exports ? this
+
+root.createCopyButton = createCopyButton = (text, home) ->
   clipboard = new Clipboard '.btn'
 
   clipboard.on 'success', (e) ->
@@ -15,7 +17,6 @@ window.createCopyButton = (text, home) ->
         trigger.tooltip 'hide'
       , 1000)
 
-
   clipboard.on 'error', (e) ->
     trigger = $(e.trigger)
 
@@ -27,7 +28,6 @@ window.createCopyButton = (text, home) ->
       setTimeout(() ->
         trigger.tooltip 'hide'
       , 3000)
-
 
   $("<button type='button' class='btn btn-default'
       data-clipboard-action='copy'
@@ -84,9 +84,9 @@ class Loader
       true
 
   checkID: ->
-    if not @requests.hasOwnProperty('user_id')
+    if not @requests['user_id']?
       uid = Cookies.get('machine_fingerprinting_userid')
-      if not uid and not @requests.hasOwnProperty('debug')
+      if not uid and not @requests['debug']?
         window.location.href = error_page
 
       user_id = parseInt(uid)
@@ -188,26 +188,29 @@ class Loader
 
     @testList = []
     window.sender = sender = new Sender()
-    @testList.push(new CubeTest())
-    @testList.push(new CameraTest())
-    @testList.push(new LineTest())
-    @testList.push(new TextureTest(@susanVertices, @susanIndices, @susanTexCoords, @texture))
-    @testList.push(new TextureTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @texture))
-    @testList.push(new SimpleLightTest(@susanVertices, @susanIndices, @susanTexCoords, @susanNormals, @texture))
-    @testList.push(new SimpleLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
-    @testList.push(new MoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
-    @testList.push(new TwoTexturesMoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture, @texture1))
-    @testList.push(new TransparentTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture))
-    @testList.push(new LightingTest())
-    @testList.push(new ClippingTest())
-    @testList.push(new BubbleTest())
-    @testList.push(new CompressedTextureTest())
-    @testList.push(new ShadowTest())
-    vidTest = new VideoTest()
+    @testList.push new CubeTest()
+    @testList.push new CameraTest()
+    @testList.push new LineTest()
+    @testList.push new TextureTest(@susanVertices, @susanIndices, @susanTexCoords, @texture)
+    @testList.push new TextureTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @texture)
+    @testList.push new SimpleLightTest(@susanVertices, @susanIndices, @susanTexCoords, @susanNormals, @texture)
+    @testList.push new SimpleLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture)
+    @testList.push new MoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture)
+    @testList.push new TwoTexturesMoreLightTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture, @texture1)
+    @testList.push new TransparentTest(@combinedVertices, @combinedIndices, @combinedTexCoords, @combinedNormals, @texture)
+    @testList.push new LightingTest()
+    @testList.push new ClippingTest()
+    @testList.push new BubbleTest()
+    @testList.push new CompressedTextureTest()
+    @testList.push new ShadowTest()
+
+    @asyncTests = []
+    @asyncTests.push new VideoTest()
+    @asyncTests.push new LanguageDector()
 
     sender.finalized = true
 
-    @numberOfTests = @testList.length + 1
+    @numberOfTests = @testList.length + @asyncTests.length
     @numComplete = 0
     postProgress = () =>
       progress(++@numComplete / @numberOfTests * 98.0)
@@ -228,7 +231,10 @@ class Loader
 
     # Tests begin in HERE
     new Tester @testList, $('#test_canvases')
-    vidTest.begin postProgress
+    for test in @asyncTests
+      test.begin postProgress
+
+    true
 
 $ ->
   loader = new Loader()
