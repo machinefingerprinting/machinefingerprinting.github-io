@@ -1,7 +1,9 @@
-/**
-  Shows a video on screen, request it to be redrawn on a canvas and
-  then collects those pixels from the canvas
-*/
+/***
+* This test plays video in preferably a webm format and draws it to a
+* canvas using a 2d context or a webgl context.  This is testing how
+* the decompression of the video container is implemented.  This is more
+* than likely something that is controlled by a browser
+***/
 
 
 var VideoCollector = function(webmVid, mp4Vid, id) {
@@ -151,6 +153,7 @@ var VideoCollector = function(webmVid, mp4Vid, id) {
 
 // Document on ready jquery shortcut
 var VideoTest = function() {
+
   var vidCollector =
       new VideoCollector("./video/rainbow.webm", "./video/rainbow.mp4", 0);
 
