@@ -938,8 +938,8 @@ window.WebGLFramework = class WebGLFramework
         return @
 
     adjustSize: ->
-        canvasWidth = @canvas.width
-        canvasHeight = @canvas.height
+        canvasWidth = @canvas.offsetWidth or 2
+        canvasHeight = @canvas.offsetHeight or 2
 
         if @width isnt canvasWidth or @height isnt canvasHeight
             @canvas.width = canvasWidth

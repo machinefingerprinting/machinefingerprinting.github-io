@@ -1,37 +1,23 @@
-###
-This test renders to a canvas a whole bunch of words in 36 different
-alphabets to test which alphabets the user has installed on their computer.
-The words are kept in the 2D array called codes in their UTF-16 format
-to ensure that they aren't interpreted before it is time to render them
-The 37th string in codes is a single character that we are hoping will
-always show up as a cannot be displayed character.
-#
-While wether the alphabet can be displayed or not is deteremined by the
-operating system, the symbol used to represent cannot be displayed is
-deteremined by the browser.  However, it does seem like it is always some
-sort of box
-###
-
 root = exports ? this
 
 safeParseJSON = (s) ->
   try
-    JSON.parse s
-  catch
-    false
+    return JSON.parse s
+  catch e
+    return false
 
 raf = (
-  window.requestAnimationFrame or
-  window.mozRequestAnimationFrame or
-  window.webkitRequestAnimationFrame or
-  window.oRequestAnimationFrame
+    window.requestAnimationFrame or
+    window.mozRequestAnimationFrame or
+    window.webkitRequestAnimationFrame or
+    window.oRequestAnimationFrame
 )
 
 caf = (
-  window.cancelAnimationFrame or
-  window.mozcancelAnimationFrame or
-  window.webkitcancelAnimationFrame or
-  window.ocancelAnimationFrame
+    window.cancelAnimationFrame or
+    window.mozcancelAnimationFrame or
+    window.webkitcancelAnimationFrame or
+    window.ocancelAnimationFrame
 )
 
 root.LanguageDector = class LanguageDector
@@ -71,8 +57,7 @@ root.LanguageDector = class LanguageDector
     [1808,1834,1825,1821,1808],
     [1931,1960,1928,1964,1920,1960],
     [5123,5316,5251,5198,5200,5222],
-    [5091,5043,5033],
-    [55295]]"
+    [5091,5043,5033], [55295]]"
 
     @fontSize = 20
     @extraHeigth = 15
@@ -86,8 +71,9 @@ root.LanguageDector = class LanguageDector
   begin: (@cb) ->
     tester = (index) =>
       if index is @codes.length
-        console.log "Lang done"
+        console.log @results
         sender.postLangsDetected @results
+
         @cb()
       else
         text = ""
@@ -98,8 +84,7 @@ root.LanguageDector = class LanguageDector
         @ctx.fillRect 0, 0, @width, @height
         @ctx.fillStyle = "black"
         @ctx.font = "#{@fontSize}px sans-serif"
-        @ctx.fillText text, 5,  @height - @extraHeigth/2.0
-
+        @ctx.fillText text, 5, @height - @extraHeigth/2.0
         @results.push
           w: @width
           h: @height
