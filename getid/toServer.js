@@ -1,9 +1,5 @@
 var ip_address = "54.221.117.15"
 
-
-    Cookies.set('machine_fingerprinting_userid', 1,
-        { expires: new Date(2000, 01, 01) });
-
 function createCopyButton(text, home) {
     var clipboard = new Clipboard('.btn');
     clipboard.on('success', function(e) {
@@ -91,7 +87,11 @@ function generateUID(){
         type: 'POST',
         data: postData,
         success:function(uid) {
-            Cookies.set('machine_fingerprinting_userid', uid);
+            Cookies.set('machine_fingerprinting_userid', uid,
+                {
+                    expires: new Date(2020, 1, 1)
+                }
+            );
             addUID(uid);
             console.log(uid);
         }

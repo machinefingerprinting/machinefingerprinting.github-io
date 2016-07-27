@@ -1,3 +1,9 @@
+/***
+* This test uses a cube texture which is a different type of texture
+* that uses 6 images to simulate a 3D texture.  This test also utilizes
+* bubbles that are modeled using a Fersnel Shader
+***/
+
 var BubbleTest = function() {
   var ID = sender.getID();
 
@@ -72,7 +78,7 @@ var BubbleTest = function() {
     renderer =
         new THREE.WebGLRenderer({context : getGL(canvas), canvas : canvas}, false);
     renderer.setPixelRatio(1);
-    renderer.setSize(256, 256);
+    renderer.setSize(canvas.width, canvas.height);
 
     var freq = 5;
     var radius = 500;
