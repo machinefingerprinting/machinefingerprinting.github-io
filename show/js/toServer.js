@@ -17,26 +17,48 @@ function populateFontList(fontArr) {
 }
 
 var Sender = function() {
-  this.finalized = false;
-  this.postData = {
-    fontlist: "No Flash",
-    user_id: -1,
-    WebGL: false,
-    inc: "Undefined",
-    gpu: "Undefined",
-    hash: "Undefined",
-    timezone: "Undefined",
-    resolution: "Undefined",
-    plugins: "Undefined",
-    cookie: "Undefined",
-    localstorage: "Undefined",
-    manufacturer: "Undefined",
-    gpuImgs: [],
-    adBlock: "Undefined",
-    langsDetected: [],
-    fps: 0.0,
-    video: []
-  };
+    this.finalized = false;
+    this.postData = {fontlist: "No Flash",
+        user_id: -1,
+        WebGL: false,
+        inc: "Undefined",
+        gpu: "Undefined",
+        hash: "Undefined",
+        timezone: "Undefined",
+        resolution: "Undefined",
+        plugins: "Undefined",
+        cookie: "Undefined",
+        localstorage: "Undefined",
+        manufacturer: "Undefined",
+        gpuImgs: [],
+        adBlock: "Undefined",
+        canvas_test: "Undefined", 
+        langsDetected: [],
+        fps: 0.0,
+        video: []
+    };
+    sumRGB = function(img) {
+        var sum = 0.0;
+        for (var i = 0; i < img.length; i += 4) {
+            sum += parseFloat(img[i + 0]);
+            sum += parseFloat(img[i + 1]);
+            sum += parseFloat(img[i + 2]);
+        }
+        return sum;
+    };
+
+    this.addFonts = function(fonts) {
+        this.postData['fontlist'] = fonts;
+    };
+
+    this.nextID = 0;
+    this.getID = function() {
+        if (this.finalized) {
+            throw "Can no longer generate ID's";
+            return -1;
+        }
+        return this.nextID++;
+    };
 
   function hashRGB(array) {
     var hash = 0, i, chr, len, j;
@@ -219,8 +241,12 @@ var Sender = function() {
     console.log(this.postData['adBlock'])
 
     console.log("Sent " + this.postData['gpuImgs'].length + " images");
+    this.postData['manufacturer'] = "Undefined";
+    cvs_test = CanvasTest();
+    this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
 
-    console.log(plgs);
+//    console.log(plgs);
+    //console.log(this.postData['gpuImageHashes']);
 
     $('#manufacturer.modal').modal('show');
     $('#submitBtn').prop('disabled', true);
