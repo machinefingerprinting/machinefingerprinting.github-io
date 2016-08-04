@@ -250,7 +250,7 @@ var Sender = function() {
               console.log("Sent " + this.postData['gpuImgs'].length + " images");
           this.postData['manufacturer'] = "Undefined";
           cvs_test = CanvasTest();
-          this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
+          this.postData['canvas_test'] = Base64EncodeUrlSafe(calcSHA1(cvs_test.substring(22, cvs_test.length))); //remove the leading words
           this.postData['cpu_cores'] = navigator.hardwareConcurrency;
 
           var start_time = Date.now();
@@ -258,7 +258,7 @@ var Sender = function() {
           var help = 1.0;
           while(help ++ != cpu_work_load){};
           var time = Date.now() - start_time;
-          console.log(time);
+          this.postData['cpu_cal'] = time;
 
           //    console.log(plgs);
           //console.log(this.postData['gpuImageHashes']);
