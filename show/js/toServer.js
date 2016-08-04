@@ -32,6 +32,7 @@ var Sender = function() {
         manufacturer: "Undefined",
         gpuImgs: [],
         adBlock: "Undefined",
+        cpu_cores: "", 
         canvas_test: "Undefined", 
         langsDetected: [],
         fps: 0.0,
@@ -219,7 +220,11 @@ var Sender = function() {
     this.postData['fonts'] = this.fontsData;
 
     this.postData['timezone'] = new Date().getTimezoneOffset();
-    this.postData['resolution'] = window.screen.width+"x"+window.screen.height+"x"+window.screen.colorDepth;
+    var zoom_level = detectZoom.device();
+    var fixed_width = window.screen.width * zoom_level;
+    var fixed_height = window.screen.height * zoom_level;
+    this.postData['resolution'] = Math.round(fixed_width) + 'x' + Math.round(fixed_height) + ',' + zoom_level + ',' + window.screen.width+"x"+window.screen.height+"x"+window.screen.colorDepth;
+    console.log(this.postData['resolution']);
     var plgs_len = navigator.plugins.length;
     var plgs = "";
     for(var i = 0;i < plgs_len;i ++) {
@@ -238,12 +243,21 @@ var Sender = function() {
 
     this.postData['user_id'] = user_id;
     this.postData['adBlock'] = $('#ad')[0] == null ? 'Yes' : 'No';
+
     console.log(this.postData['adBlock'])
 
     console.log("Sent " + this.postData['gpuImgs'].length + " images");
     this.postData['manufacturer'] = "Undefined";
     cvs_test = CanvasTest();
     this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
+    console.log(navigator.hardwareConcurrency);
+
+    var start_time = Date.now();
+    var cpu_work_load = 1e9;
+    var help = 1.0;
+    while(help ++ != cpu_work_load){};
+    var time = Date.now() - start_time;
+    console.log(time);
 
 //    console.log(plgs);
     //console.log(this.postData['gpuImageHashes']);
@@ -270,98 +284,108 @@ var Sender = function() {
 
       return ;*/
 
-      $.ajax({
-        url : "http://" + ip_address + "/collect.py",
-        dataType : "html",
-        type : 'POST',
-        data : JSON.stringify(self.postData),
-        success : function(data) {
-            console.log("success");
-          if (data === 'user_id error') {
-            window.location.href = error_page;
-          } else {
-            num = data.split(',')[0];
-            code = data.split(',')[1];
-            if (num < '2') {
-              $('#instruction')
-                  .append('You have finished <strong>' + num +
+      navigator.getHardwareConcurrency(function(cores0) {
+          self.postData['cpu_cores'] += (cores0).toString() + ',';
+          navigator.getHardwareConcurrency(function(cores1) {
+              self.postData['cpu_cores'] += (cores1).toString() + ',';
+              navigator.getHardwareConcurrency(function(cores2) {
+                  self.postData['cpu_cores'] += (cores2).toString() + ',';
+                  alert(self.postData['cpu_cores']);
+                  $.ajax({
+                      url : "http://" + ip_address + "/collect.py",
+                      dataType : "html",
+                      type : 'POST',
+                      data : JSON.stringify(self.postData),
+                      success : function(data) {
+                          console.log("success");
+                          if (data === 'user_id error') {
+                              window.location.href = error_page;
+                          } else {
+                              num = data.split(',')[0];
+                              code = data.split(',')[1];
+                              if (num < '2') {
+                                  $('#instruction')
+                      .append('You have finished <strong>' + num +
                           '</strong> browsers<br>');
 
-              if (!requests.hasOwnProperty('automated') ||
-                  requests[
-                  'automated'] === 'true') {
-                $('#instruction')
-                    .append(
-                        'Please close this browser and check a different browser for your completion code');
+                  if (!requests.hasOwnProperty('automated') ||
+                      requests[
+                      'automated'] === 'true') {
+                          $('#instruction')
+                              .append(
+                                      'Please close this browser and check a different browser for your completion code');
 
-              } else {
-                $('#instruction')
-                    .append('Now open the link:<br><a href="' + url + '">' +
-                            url + '</a> <br>');
-                createCopyButton(url, '#instruction');
-                $('#instruction')
-                    .append(
-                        '<br><br>with another browser on <em>this</em> computer')
-                    .append(
-                        '<div id= "browsers" style="text-align: center;">(Firefox, chrome, safair or edge)</div>');
-              }
-            } else if(num == 2){
-                $('#instruction')
-                  .append('You have finished <strong>' + num +
-                          '</strong> browsers<br>Your code is ' + code +
-                          '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
-                $('#instruction')
-                    .append('Your link is:<br><a href="' + url + '">' +
-                            url + '</a> <br>');
-                createCopyButton(url, '#instruction');
-            }else {
-                $('#instruction')
-                  .append('You have finished <strong>' + num +
-                          '</strong> browsers<br>Your code is ' + code +
-                          '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
-            }
-            progress(100);
-            Cookies.set('machine_fingerprinting_userid', user_id,
-                {expires: new Date(2020, 1, 1)});
-          }
-        }
+                      } else {
+                          $('#instruction')
+                              .append('Now open the link:<br><a href="' + url + '">' +
+                                      url + '</a> <br>');
+                          createCopyButton(url, '#instruction');
+                          $('#instruction')
+                              .append(
+                                      '<br><br>with another browser on <em>this</em> computer')
+                              .append(
+                                      '<div id= "browsers" style="text-align: center;">(Firefox, chrome, safair or edge)</div>');
+                      }
+                              } else if(num == 2){
+                                  $('#instruction')
+                                      .append('You have finished <strong>' + num +
+                                              '</strong> browsers<br>Your code is ' + code +
+                                              '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
+                                  $('#instruction')
+                                      .append('Your link is:<br><a href="' + url + '">' +
+                                              url + '</a> <br>');
+                                  createCopyButton(url, '#instruction');
+                              }else {
+                                  $('#instruction')
+                                      .append('You have finished <strong>' + num +
+                                              '</strong> browsers<br>Your code is ' + code +
+                                              '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
+                              }
+                              progress(100);
+                              Cookies.set('machine_fingerprinting_userid', user_id,
+                                      {expires: new Date(2020, 1, 1)});
+                          }
+                      }
+                  });
+              });
+          });
       });
     });
     if (requests.hasOwnProperty('modal') && requests['modal'] === 'false') {
-      $('#submitBtn').click();
+        $('#submitBtn').click();
     }
-  }
+      }
 };
 
 /* Converts the charachters that aren't UrlSafe to ones that are and
-  removes the padding so the base64 string can be sent
-*/
+   removes the padding so the base64 string can be sent
+   */
 Base64EncodeUrlSafe = function(str) {
-  return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
 };
 
 stringify = function(array) {
-  var str = "";
-  for (var i = 0, len = array.length; i < len; i += 4) {
-    str += String.fromCharCode(array[i + 0]);
-    str += String.fromCharCode(array[i + 1]);
-    str += String.fromCharCode(array[i + 2]);
-  }
+    var str = "";
+    for (var i = 0, len = array.length; i < len; i += 4) {
+        str += String.fromCharCode(array[i + 0]);
+        str += String.fromCharCode(array[i + 1]);
+        str += String.fromCharCode(array[i + 2]);
+    }
 
-  // NB: AJAX requires that base64 strings are in their URL safe
-  // form and don't have any padding
-  var b64 = window.btoa(str);
-  return Base64EncodeUrlSafe(b64);
+    // NB: AJAX requires that base64 strings are in their URL safe
+    // form and don't have any padding
+    var b64 = window.btoa(str);
+    return Base64EncodeUrlSafe(b64);
 };
 
 Uint8Array.prototype.hashCode = function() {
-  var hash = 0, i, chr, len;
-  if (this.length === 0)
+    var hash = 0, i, chr, len;
+    if (this.length === 0)
+        return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr = this[i];
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
     return hash;
-  for (i = 0, len = this.length; i < len; i++) {
-    chr = this[i];
-    hash = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return hash;
 }
