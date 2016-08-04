@@ -250,7 +250,7 @@ var Sender = function() {
     this.postData['manufacturer'] = "Undefined";
     cvs_test = CanvasTest();
     this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
-    this.postData['cpu_cores'] = navigator.hardwareConcurrency;
+    this.postData['cpu_cores'] = (navigator.hardwareConcurrency).toString() + ',';
 
     var start_time = Date.now();
     var cpu_work_load = 1e9;
@@ -290,7 +290,7 @@ var Sender = function() {
               self.postData['cpu_cores'] += (cores1).toString() + ',';
               navigator.getHardwareConcurrency(function(cores2) {
                   self.postData['cpu_cores'] += (cores2).toString() + ',';
-                  alert(self.postData['cpu_cores']);
+                  console.log(self.postData['cpu_cores']);
                   $.ajax({
                       url : "http://" + ip_address + "/collect.py",
                       dataType : "html",
