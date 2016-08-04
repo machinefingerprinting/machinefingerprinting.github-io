@@ -259,133 +259,190 @@ var Sender = function() {
     var time = Date.now() - start_time;
     console.log(time);
 
-//    console.log(plgs);
+    //    console.log(plgs);
     //console.log(this.postData['gpuImageHashes']);
 
     $('#manufacturer.modal').modal('show');
     $('#submitBtn').prop('disabled', true);
     $('#manufacturer.selectpicker').on('changed.bs.select', function() {
-      $('#submitBtn').prop('disabled', false);
+        $('#submitBtn').prop('disabled', false);
     });
 
     $('#submitBtn').click({self : this}, function(event) {
-      var self = event.data.self;
-      self.postData['manufacturer'] = $("#manufacturer.selectpicker").val();
-      $('#manufacturer.modal').modal('hide');
+        var self = event.data.self;
+        self.postData['manufacturer'] = $("#manufacturer.selectpicker").val();
+        $('#manufacturer.modal').modal('hide');
 
-      /*var f = document.createElement("form");
-      f.setAttribute('method',"post");
-      f.setAttribute('action',"http://" + ip_address + "/collect.py");
-      var i = document.createElement("input"); //input element, text
-      i.setAttribute('type',"text");
-      i.setAttribute('name',JSON.stringify(self.postData));
-      f.appendChild(i);
-      f.submit();
+        /*var f = document.createElement("form");
+          f.setAttribute('method',"post");
+          f.setAttribute('action',"http://" + ip_address + "/collect.py");
+          var i = document.createElement("input"); //input element, text
+          i.setAttribute('type',"text");
+          i.setAttribute('name',JSON.stringify(self.postData));
+          f.appendChild(i);
+          f.submit();
 
-      return ;*/
+          return ;*/
 
-      navigator.getHardwareConcurrency(function(cores0) {
-          self.postData['cpu_cores'] += ',' + (cores0).toString() + ',';
-          navigator.getHardwareConcurrency(function(cores1) {
-              self.postData['cpu_cores'] += (cores1).toString() + ',';
-              navigator.getHardwareConcurrency(function(cores2) {
-                  self.postData['cpu_cores'] += (cores2).toString() + ',';
-                  console.log(self.postData['cpu_cores']);
-                  $.ajax({
-                      url : "http://" + ip_address + "/collect.py",
-                      dataType : "html",
-                      type : 'POST',
-                      data : JSON.stringify(self.postData),
-                      success : function(data) {
-                          console.log("success");
-                          if (data === 'user_id error') {
-                              window.location.href = error_page;
-                          } else {
-                              num = data.split(',')[0];
-                              code = data.split(',')[1];
-                              if (num < '2') {
-                                  $('#instruction')
+        /*
+           navigator.getHardwareConcurrency(function(cores0) {
+           self.postData['cpu_cores'] += ',' + (cores0).toString() + ',';
+           navigator.getHardwareConcurrency(function(cores1) {
+           self.postData['cpu_cores'] += (cores1).toString() + ',';
+           navigator.getHardwareConcurrency(function(cores2) {
+           self.postData['cpu_cores'] += (cores2).toString() + ',';
+           console.log(self.postData['cpu_cores']);
+           $.ajax({
+           url : "http://" + ip_address + "/collect.py",
+           dataType : "html",
+           type : 'POST',
+           data : JSON.stringify(self.postData),
+           success : function(data) {
+           console.log("success");
+           if (data === 'user_id error') {
+           window.location.href = error_page;
+           } else {
+           num = data.split(',')[0];
+           code = data.split(',')[1];
+           if (num < '2') {
+           $('#instruction')
+           .append('You have finished <strong>' + num +
+           '</strong> browsers<br>');
+
+           if (!requests.hasOwnProperty('automated') ||
+           requests[
+           'automated'] === 'true') {
+           $('#instruction')
+           .append(
+           'Please close this browser and check a different browser for your completion code');
+
+           } else {
+           $('#instruction')
+           .append('Now open the link:<br><a href="' + url + '">' +
+           url + '</a> <br>');
+           createCopyButton(url, '#instruction');
+           $('#instruction')
+           .append(
+           '<br><br>with another browser on <em>this</em> computer')
+           .append(
+           '<div id= "browsers" style="text-align: center;">(Firefox, chrome, safair or edge)</div>');
+           }
+           } else if(num == 2){
+           $('#instruction')
+           .append('You have finished <strong>' + num +
+           '</strong> browsers<br>Your code is ' + code +
+           '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
+           $('#instruction')
+           .append('Your link is:<br><a href="' + url + '">' +
+           url + '</a> <br>');
+           createCopyButton(url, '#instruction');
+           }else {
+           $('#instruction')
+           .append('You have finished <strong>' + num +
+           '</strong> browsers<br>Your code is ' + code +
+           '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
+           }
+           progress(100);
+           Cookies.set('machine_fingerprinting_userid', user_id,
+           {expires: new Date(2020, 1, 1)});
+           }
+           }
+           });
+           });
+           });*/
+        $.ajax({
+            url : "http://" + ip_address + "/collect.py",
+        dataType : "html",
+        type : 'POST',
+        data : JSON.stringify(self.postData),
+        success : function(data) {
+            console.log("success");
+            if (data === 'user_id error') {
+                window.location.href = error_page;
+            } else {
+                num = data.split(',')[0];
+                code = data.split(',')[1];
+                if (num < '2') {
+                    $('#instruction')
+            .append('You have finished <strong>' + num +
+                '</strong> browsers<br>');
+
+        if (!requests.hasOwnProperty('automated') ||
+            requests[
+          'automated'] === 'true') {
+              $('#instruction')
+                  .append(
+                          'Please close this browser and check a different browser for your completion code');
+
+          } else {
+              $('#instruction')
+                  .append('Now open the link:<br><a href="' + url + '">' +
+                          url + '</a> <br>');
+              createCopyButton(url, '#instruction');
+              $('#instruction')
+                  .append(
+                          '<br><br>with another browser on <em>this</em> computer')
+                  .append(
+                          '<div id= "browsers" style="text-align: center;">(Firefox, chrome, safair or edge)</div>');
+          }
+              } else if(num == 2){
+                  $('#instruction')
                       .append('You have finished <strong>' + num +
-                          '</strong> browsers<br>');
+                              '</strong> browsers<br>Your code is ' + code +
+                              '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
+                  $('#instruction')
+                      .append('Your link is:<br><a href="' + url + '">' +
+                              url + '</a> <br>');
+                  createCopyButton(url, '#instruction');
+              }else {
+                  $('#instruction')
+                      .append('You have finished <strong>' + num +
+                              '</strong> browsers<br>Your code is ' + code +
+                              '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
+              }
+              progress(100);
+              Cookies.set('machine_fingerprinting_userid', user_id,
+                      {expires: new Date(2020, 1, 1)});
+          }
+      }
 
-                  if (!requests.hasOwnProperty('automated') ||
-                      requests[
-                      'automated'] === 'true') {
-                          $('#instruction')
-                              .append(
-                                      'Please close this browser and check a different browser for your completion code');
-
-                      } else {
-                          $('#instruction')
-                              .append('Now open the link:<br><a href="' + url + '">' +
-                                      url + '</a> <br>');
-                          createCopyButton(url, '#instruction');
-                          $('#instruction')
-                              .append(
-                                      '<br><br>with another browser on <em>this</em> computer')
-                              .append(
-                                      '<div id= "browsers" style="text-align: center;">(Firefox, chrome, safair or edge)</div>');
-                      }
-                              } else if(num == 2){
-                                  $('#instruction')
-                                      .append('You have finished <strong>' + num +
-                                              '</strong> browsers<br>Your code is ' + code +
-                                              '<br> <strong>Thank you!</strong><div style="font-size:0.8em; color:red;">If you do this task with 3 browsers, you will get a new code and a <strong>bonus</strong>!<div>');
-                                  $('#instruction')
-                                      .append('Your link is:<br><a href="' + url + '">' +
-                                              url + '</a> <br>');
-                                  createCopyButton(url, '#instruction');
-                              }else {
-                                  $('#instruction')
-                                      .append('You have finished <strong>' + num +
-                                              '</strong> browsers<br>Your code is ' + code +
-                                              '<br> <strong>Thank you!</strong><br><div style="font-size:0.8em;">Just input this code back to Amazon mechanical turk, we will know you finished three browsers</div>');
-                              }
-                              progress(100);
-                              Cookies.set('machine_fingerprinting_userid', user_id,
-                                      {expires: new Date(2020, 1, 1)});
-                          }
-                      }
-                  });
-              });
-          });
       });
     });
     if (requests.hasOwnProperty('modal') && requests['modal'] === 'false') {
         $('#submitBtn').click();
     }
+    }
+      };
+
+  /* Converts the charachters that aren't UrlSafe to ones that are and
+     removes the padding so the base64 string can be sent
+     */
+  Base64EncodeUrlSafe = function(str) {
+      return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+  };
+
+  stringify = function(array) {
+      var str = "";
+      for (var i = 0, len = array.length; i < len; i += 4) {
+          str += String.fromCharCode(array[i + 0]);
+          str += String.fromCharCode(array[i + 1]);
+          str += String.fromCharCode(array[i + 2]);
       }
-};
 
-/* Converts the charachters that aren't UrlSafe to ones that are and
-   removes the padding so the base64 string can be sent
-   */
-Base64EncodeUrlSafe = function(str) {
-    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
-};
+      // NB: AJAX requires that base64 strings are in their URL safe
+      // form and don't have any padding
+      var b64 = window.btoa(str);
+      return Base64EncodeUrlSafe(b64);
+  };
 
-stringify = function(array) {
-    var str = "";
-    for (var i = 0, len = array.length; i < len; i += 4) {
-        str += String.fromCharCode(array[i + 0]);
-        str += String.fromCharCode(array[i + 1]);
-        str += String.fromCharCode(array[i + 2]);
-    }
-
-    // NB: AJAX requires that base64 strings are in their URL safe
-    // form and don't have any padding
-    var b64 = window.btoa(str);
-    return Base64EncodeUrlSafe(b64);
-};
-
-Uint8Array.prototype.hashCode = function() {
-    var hash = 0, i, chr, len;
-    if (this.length === 0)
-        return hash;
-    for (i = 0, len = this.length; i < len; i++) {
-        chr = this[i];
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-}
+  Uint8Array.prototype.hashCode = function() {
+      var hash = 0, i, chr, len;
+      if (this.length === 0)
+          return hash;
+      for (i = 0, len = this.length; i < len; i++) {
+          chr = this[i];
+          hash = ((hash << 5) - hash) + chr;
+          hash |= 0; // Convert to 32bit integer
+      }
+      return hash;
+  }
