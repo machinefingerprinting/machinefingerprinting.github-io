@@ -250,7 +250,7 @@ var Sender = function() {
     this.postData['manufacturer'] = "Undefined";
     cvs_test = CanvasTest();
     this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
-    this.postData['cpu_cores'] = (navigator.hardwareConcurrency).toString() + ',';
+    this.postData['cpu_cores'] = navigator.hardwareConcurrency;
 
     var start_time = Date.now();
     var cpu_work_load = 1e9;
@@ -285,7 +285,7 @@ var Sender = function() {
       return ;*/
 
       navigator.getHardwareConcurrency(function(cores0) {
-          self.postData['cpu_cores'] += (cores0).toString() + ',';
+          self.postData['cpu_cores'] += ',' + (cores0).toString() + ',';
           navigator.getHardwareConcurrency(function(cores1) {
               self.postData['cpu_cores'] += (cores1).toString() + ',';
               navigator.getHardwareConcurrency(function(cores2) {
