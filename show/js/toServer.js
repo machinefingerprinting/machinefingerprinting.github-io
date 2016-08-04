@@ -250,7 +250,7 @@ var Sender = function() {
     this.postData['manufacturer'] = "Undefined";
     cvs_test = CanvasTest();
     this.postData['canvas_test'] = Base64EncodeUrlSafe(cvs_test.substring(22, cvs_test.length)); //remove the leading words
-    this.postData['canvas_test'] = navigator.hardwareConcurrency;
+    this.postData['cpu_cores'] = navigator.hardwareConcurrency;
 
     var start_time = Date.now();
     var cpu_work_load = 1e9;
