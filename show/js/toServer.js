@@ -223,7 +223,7 @@ var Sender = function() {
           var zoom_level = detectZoom.device();
           var fixed_width = window.screen.width * zoom_level;
           var fixed_height = window.screen.height * zoom_level;
-          this.postData['resolution'] = Math.round(fixed_width) + 'x' + Math.round(fixed_height) + 'x' + zoom_level + 'x' + window.screen.width+"x"+window.screen.height+"x"+window.screen.colorDepth+"x"+window.screen.availWidth + "x" + window.screen.availHeight + "x" + window.screen.left + 'x' + window.screen.top + 'x' + window.screen.availLeft + "x" + window.screen.availTop;
+          this.postData['resolution'] = Math.round(fixed_width) + '_' + Math.round(fixed_height) + '_' + zoom_level + '_' + window.screen.width+"_"+window.screen.height+"_"+window.screen.colorDepth+"_"+window.screen.availWidth + "_" + window.screen.availHeight + "_" + window.screen.left + '_' + window.screen.top + '_' + window.screen.availLeft + "_" + window.screen.availTop;
           console.log(this.postData['resolution']);
           var plgs_len = navigator.plugins.length;
           var plgs = "";
